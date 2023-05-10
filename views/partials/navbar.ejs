@@ -9,12 +9,13 @@
                     </svg>
                 </button>
                 <a href="/" class="md:ml-3">
-                    <img src="./images/Logo.svg" alt="Logo">
+                    <img src="/images/Logo.svg" alt="Logo">
                 </a>
             </div>
             <div class="flex items-center">
                 <div class="flex items-center ml-3">
-                    <div>
+                    <div class="flex flex-row justify-center items-center gap-x-2">
+                        <p>Hi, <%= name %>!</p>
                         <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
                             <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
@@ -27,7 +28,7 @@
                                 <span class="text-sm">Pengaturan</span></a>
                             <div class="hover:translate-x-2 transition-transform ease-in duration-200 hover:text-gray-600 px-2 py-1 cursor-pointer text-gray-400 flex flex-row items-center gap-x-2">
                                 <span class="transform rotate-180"><i class="bx bx-log-out"></i></span>
-                                <button class="text-sm">Logout</button>
+                                <a href="/signout" class="text-sm">Keluar</a>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+        <script>
+          const userRole = "<%= role %>"; // contoh role pengguna, seharusnya diganti dengan data dari server
+          const liElements = document.querySelectorAll('li[data-role]');
+
+          liElements.forEach(li => {
+            const roles = li.dataset.role.split(' ');
+            if (!roles.includes(userRole)) {
+              li.style.display = 'none';
+            }
+          });
+        </script>
     </body>
 </html>

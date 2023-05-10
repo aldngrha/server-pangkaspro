@@ -7,6 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('server-pangkaspro:server');
 const http = require('http');
+const database = require("../app/database")
 
 /**
  * Get port from environment and store in Express.
@@ -21,13 +22,20 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
+// bila terjadi error saat connect ke mongdb maka akan tampil error diterminal
+database.on('error', function (err) {
+  console.log('connection error: tidak bisa tersambung ke mongodb');
+});
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+database.on('open', function () {
+  server.listen(port, () => {
+    console.log('server run port :' + port);
+  });
+  server.on('error', onError);
+  server.on('listening', onListening);
+});
 
 /**
  * Normalize a port into a number, string, or false.
