@@ -2,21 +2,21 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <ul class="flex flex-col py-4">
             <li>
-                <a href="/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-secondary hover:text-secondary-hover">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-secondary"><i class="bx bx-home"></i></span>
-                    <span class="text-sm font-bold">Dashboard</span>
+                <a href="/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/dashboard') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/dashboard') ? 'text-secondary' : 'text-gray-400'%>"><i class="bx bx-home"></i></span>
+                    <span class="text-sm <%= url.startsWith('/dashboard') ? 'font-bold' : 'font-medium'%>">Dashboard</span>
                 </a>
             </li>
             <li data-role="barber">
-                <a href="/barber" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-cut"></i></span>
-                    <span class="text-sm font-medium">My Barber</span>
+                <a href="/barber" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/barber') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/barber') ? 'text-secondary' : 'text-gray-400'%>"><i class="bx bx-cut"></i></span>
+                    <span class="text-sm <%= url.startsWith('/barber') ? 'font-bold' : 'font-medium'%>">My Barber</span>
                 </a>
             </li>
             <li data-role="admin barber">
-                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-line-chart"></i></span>
-                    <span class="text-sm font-medium">Transaksi</span>
+                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/transaction') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %> ">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/transaction') ? 'text-secondary' : 'text-gray-400'%>"><i class="bx bx-line-chart"></i></span>
+                    <span class="text-sm <%= url.startsWith('/transaction') ? 'font-bold' : 'font-medium'%>">Transaksi</span>
                 </a>
             </li>
             <li data-role="barber">

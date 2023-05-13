@@ -21,6 +21,7 @@ module.exports = {
       res.render("pages/barber/index", {
         name: session.name,
         role: session.role,
+        url: req.url,
         title: "Pangkaspro | My Barber",
         alert,
         barbers,
@@ -37,6 +38,7 @@ module.exports = {
       res.render("pages/barber/create", {
         name: session.name,
         role: session.role,
+        url: req.url,
         title: "Pangkaspro | Add Barber",
       });
     } catch (error) {
@@ -91,6 +93,7 @@ module.exports = {
       res.render("pages/barber/edit", {
         name: session.name,
         role: session.role,
+        url: req.url,
         title: "Pangkaspro | Edit Barber",
         alert,
         barber,
