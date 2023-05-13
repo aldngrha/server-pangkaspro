@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const HASH_ROUND = 10;
 
-let UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Nama harus diisi"],
@@ -27,24 +27,33 @@ let UserSchema = new mongoose.Schema({
     enum: ["user", "admin", "barber", "kapster"],
     default: "user",
   },
-  barber: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Barber",
-  },
-  favourite: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Barber",
-  },
+  barber: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Barber",
+    },
+  ],
+  favourite: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Barber",
+    },
+  ],
 });
 
 // Validasi email agar tidak boleh sama
 UserSchema.path("email").validate(
   async function (value) {
-    try {
-      const count = await this.model("User").countDocuments({ email: value });
-      return !count;
-    } catch (err) {
-      throw err;
+    if (this.isNew) {
+      // Validasi hanya diterapkan untuk objek User baru
+      try {
+        const count = await this.model("User").countDocuments({ email: value });
+        return !count;
+      } catch (err) {
+        throw err;
+      }
+    } else {
+      return true; // Return true untuk mengabaikan validasi untuk objek yang sudah ada
     }
   },
   (attr) => `${attr.value} sudah terdaftar`

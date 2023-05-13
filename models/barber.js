@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Rating = require("./rating");
 
-let BarberSchema = new mongoose.Schema({
+const BarberSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Nama barber harus diisi"],
@@ -20,6 +21,28 @@ let BarberSchema = new mongoose.Schema({
   accountNumber: {
     type: Number,
   },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  imageId: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Image",
+    },
+  ],
 });
+
+BarberSchema.methods.calculateAvgRating = async function () {
+  const ratingDocs = await Rating.find({ barberId: this._id });
+  const ratingValues = ratingDocs.map((rating) => rating.value);
+  const sum = ratingValues.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  const avgRating = ratingValues.length > 0 ? sum / ratingValues.length : 0;
+  this.rating = avgRating;
+  await this.save();
+};
 
 module.exports = mongoose.model("Barber", BarberSchema);

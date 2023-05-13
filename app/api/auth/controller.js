@@ -16,11 +16,13 @@ module.exports = {
       if (option === "yes") {
         const barber = new Barber({
           name: barberName,
-          price: null,
+          price: 0,
           description: "",
           accountName: "",
           bank: "",
           accountNumber: "",
+          imageId: [],
+          rating: 0,
         });
         await barber.save();
         // set role untuk user yang terkait
@@ -34,7 +36,7 @@ module.exports = {
           phoneNumber: "",
           address: "",
           role: userRole,
-          barber: barber._id,
+          barber: [barber._id],
         });
       } else {
         // buat user baru dengan role user
@@ -45,7 +47,7 @@ module.exports = {
           phoneNumber: "",
           address: "",
           role: userRole,
-          favourite: null,
+          favourite: [],
         });
       }
 

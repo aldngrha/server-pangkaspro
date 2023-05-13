@@ -10,23 +10,35 @@
         </div>
         <div class="bg-white w-full rounded-lg">
             <div class="p-6">
-                <form action="/barber/?_method=PUT" method="POST" enctype="multipart/form-data">
+                <form action="/barber/create" method="POST" enctype="multipart/form-data">
                     <div class="flex flex-col md:flex-row md:flex-wrap justify-between gap-y-5 md:gap-x-2 py-2">
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="name" class="text-gray-600 font-light">Nama Pangkas Rambut / Barbershop</label>
-                            <input name="name" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="Nama Pangkas">
+                            <input name="name" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="price" class="text-gray-600 font-light">Harga</label>
-                            <input name="price" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="Harga">
+                            <input name="price" type="number" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: 400000">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="bank" class="text-gray-600 font-light">Bank</label>
+                            <input name="bank" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: BCA">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="accountName" class="text-gray-600 font-light">Nama Pemilik Rekening</label>
+                            <input name="accountName" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Brian">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="accountNumber" class="text-gray-600 font-light">Nomor Rekening</label>
+                            <input name="accountNumber" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: 113031921">
                         </div>
                         <div class="flex flex-col md:w-full gap-y-2">
                             <label for="description" class="text-gray-600 font-light">Deskripsi</label>
                             <textarea name="description" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="Deskripsi ..."></textarea>
                         </div>
                         <div class="flex flex-col md:w-full gap-y-2">
-                            <label for="imageId" class="text-gray-600 font-light">Photo</label>
-                            <input name="imageId" type="file" class="pl-9 pr-3 sm:text-sm text-sm text-slate-500" multiple>
+                            <label for="image" class="text-gray-600 font-light">Photo</label>
+                            <input name="image" type="file" class="pl-9 pr-3 sm:text-sm text-sm text-slate-500" multiple>
                         </div>
                         <div class="flex flex-col md:w-full gap-y-2">
                             <button type="submit" style="background: #D25B04;" class="py-2 text-white font-semibold rounded-md hover:bg-secondary-hover hover:text-slate-100">Simpan</button>

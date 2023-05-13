@@ -26,7 +26,7 @@
                                 Harga
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Deskripsi
+                                Rating
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Action
@@ -35,24 +35,28 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <% for(let i = 0; i < barbers.length; i++) {%>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Pangkas Ipung
+                                <%= barbers[i].name %>
                             </th>
                             <td class="px-6 py-4">
-                                Rp140.000
+                                Rp<%= barbers[i].price.toLocaleString('id-ID') %>
                             </td>
                             <td class="px-6 py-4">
-                                akslakslksa
+                                <%= barbers[i].rating %>
                             </td>
                             <td class="px-6 py-4 flex">
-                                <a href="" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-800"><i class="bx bxs-image"></i></a>
-                                <a href="/barber/edit" class="p-2 mr-1 bg-yellow-300 rounded-md text-white hover:bg-yellow-500"><i class="bx bxs-pencil"></i></a>
-                                <button class="p-[7px] bg-red-600 rounded-md text-white hover:bg-red-700">
-                                    <i class="bx bxs-trash"></i>
-                                </button>
+                                <form action="/barber/<%= barbers[i].id %>/delete?_method=DELETE" method="POST">
+                                    <a href="" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-800"><i class="fa fa-eye"></i></a>
+                                    <a href="/barber/edit/<%= barbers[i].id %>" class="p-2 mr-1 bg-yellow-300 rounded-md text-white hover:bg-yellow-500"><i class="bx bxs-pencil"></i></a>
+                                    <button type="submit" class="p-[7px] bg-red-600 rounded-md text-white hover:bg-red-700">
+                                        <i class="bx bxs-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
+                        <%}%>
                         </tbody>
                     </table>
                 </div>
