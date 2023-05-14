@@ -2,44 +2,47 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const HASH_ROUND = 10;
 
-const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Nama harus diisi"],
-  },
-  email: {
-    type: String,
-    required: [true, "Email harus diisi"],
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: [true, "Password harus diisi"],
-  },
-  phoneNumber: {
-    type: String,
-  },
-  address: {
-    type: String,
-  },
-  role: {
-    type: String,
-    enum: ["user", "admin", "barber", "kapster"],
-    default: "user",
-  },
-  barber: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Barber",
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Nama harus diisi"],
     },
-  ],
-  favourite: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Barber",
+    email: {
+      type: String,
+      required: [true, "Email harus diisi"],
+      unique: true,
     },
-  ],
-});
+    password: {
+      type: String,
+      required: [true, "Password harus diisi"],
+    },
+    phoneNumber: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin", "barber", "kapster"],
+      default: "user",
+    },
+    barber: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Barber",
+      },
+    ],
+    favourite: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Barber",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 // Validasi email agar tidak boleh sama
 UserSchema.path("email").validate(

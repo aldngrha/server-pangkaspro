@@ -1,9 +1,10 @@
 const express = require("express");
 const Dashboard = require("../app/cms/dashboard");
 const Barber = require("../app/cms/barber");
+const Kapster = require("../app/cms/kapster");
 const Auth = require("../app/cms/auth");
-const { allRole, isBarber } = require("../middlewares/auth");
-const { uploadMultiple } = require("../middlewares/multer");
+const { allRole, isBarber, isKapster } = require("../middlewares/auth");
+const { uploadMultiple, uploadSingle } = require("../middlewares/multer");
 const router = express.Router();
 
 /* GET home page. */
@@ -19,5 +20,12 @@ router.post("/barber/create", uploadMultiple, isBarber, Barber.store);
 router.get("/barber/edit/:id", isBarber, Barber.edit);
 router.put("/barber/edit/:id", uploadMultiple, isBarber, Barber.update);
 router.delete("/barber/:id/delete", isBarber, Barber.delete);
+
+router.get("/kapster", isBarber, Kapster.index);
+router.get("/kapster/create", isBarber, Kapster.create);
+router.post("/kapster/create", uploadSingle, isBarber, Kapster.store);
+router.get("/kapster/edit/:id", isBarber, Kapster.edit);
+router.put("/kapster/edit/:id", uploadSingle, isBarber, Kapster.update);
+router.delete("/kapster/:id/delete", isBarber, Kapster.delete);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-60 h-screen pt-20 transition-transform -translate-x-full bg-white sm:translate-x-0" aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white">
         <ul class="flex flex-col py-4">
-            <li>
+            <li data-role="admin barber kapster">
                 <a href="/dashboard" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/dashboard') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %>">
                     <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/dashboard') ? 'text-secondary' : 'text-gray-400'%>"><i class="bx bx-home"></i></span>
                     <span class="text-sm <%= url.startsWith('/dashboard') ? 'font-bold' : 'font-medium'%>">Dashboard</span>
@@ -14,33 +14,33 @@
                 </a>
             </li>
             <li data-role="admin barber">
-                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/transaction') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %> ">
+                <a href="/transaction" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/transaction') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %> ">
                     <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/transaction') ? 'text-secondary' : 'text-gray-400'%>"><i class="bx bx-line-chart"></i></span>
                     <span class="text-sm <%= url.startsWith('/transaction') ? 'font-bold' : 'font-medium'%>">Transaksi</span>
                 </a>
             </li>
             <li data-role="barber">
-                <a href="/status" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-time"></i></span>
-                    <span class="text-sm font-medium">Set Status</span>
+                <a href="/status" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/status') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800' %>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/status') ? 'text-secondary' : 'text-gray-500' %>"><i class="bx bx-time"></i></span>
+                    <span class="text-sm <%= url.startsWith('/status') ? 'font-bold' : 'font-medium'%>">Set Status</span>
                 </a>
             </li>
             <li data-role="barber">
-                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-user-check"></i></span>
-                    <span class="text-sm font-medium">Kapster</span>
+                <a href="/kapster" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/kapster') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800'%>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/kapster') ? 'text-secondary' : 'text-gray-500' %>"><i class="bx bx-user-check"></i></span>
+                    <span class="text-sm <%= url.startsWith('/status') ? 'font-bold' : 'font-medium'%>">Kapster</span>
                 </a>
             </li>
             <li data-role="admin">
-                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-group"></i></span>
-                    <span class="text-sm font-medium">Pengguna</span>
+                <a href="/user" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/user') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800'%>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/user') ? 'text-secondary' : 'text-gray-500' %>"><i class="bx bx-group"></i></span>
+                    <span class="text-sm <%= url.startsWith('/user') ? 'font-bold' : 'font-medium'%>">Pengguna</span>
                 </a>
             </li>
             <li data-role="kapster">
-                <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-dollar"></i></span>
-                    <span class="text-sm font-medium">Pembayaran Cash</span>
+                <a href="/cash-on-delivery" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 <%= url.startsWith('/cash-on-delivery') ? 'text-secondary hover:text-secondary-hover' : 'text-gray-500 hover:text-gray-800'%>">
+                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg <%= url.startsWith('/cash-on-delivery') ? 'text-secondary' : 'text-gray-500' %>"><i class="bx bx-dollar"></i></span>
+                    <span class="text-sm <%= url.startsWith('/cash-on-delivery') ? 'font-bold' : 'font-medium'%>">Pembayaran Cash</span>
                 </a>
             </li>
         </ul>

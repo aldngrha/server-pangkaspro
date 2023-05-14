@@ -1,0 +1,66 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">My Kapster</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Kelola kapstermu!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">My Kapster List</h1>
+                            <a href="/kapster/create" class="text-sm mb-2 font-normal text-white px-2 py-2 rounded-md bg-secondary hover:bg-secondary-hover hover:text-gray-100"><i class="bx bx-plus mr-1"></i>Tambah</a>
+                        </div>
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Nama Kapster
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Barbershop
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Foto
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                                <span class="sr-only">Action</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(let i = 0; i < kapsters.length; i++) {%>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= kapsters[i].name %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= kapsters[i].barberId.name %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <img src="http://localhost:9000/<%= kapsters[i].imageUrl %> " alt="imageUrl" width="70px">
+                                </td>
+                                <td class="px-6 py-4 flex">
+                                    <form action="/kapster/<%= kapsters[i].id %>/delete?_method=DELETE" method="POST">
+                                        <a href="/kapster/edit/<%= kapsters[i].id %>" class="p-2 mr-1 bg-yellow-300 rounded-md text-white hover:bg-yellow-500"><i class="bx bxs-pencil"></i></a>
+                                        <button type="submit" class="p-[7px] bg-red-600 rounded-md text-white hover:bg-red-700">
+                                            <i class="bx bxs-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../../partials/footer")%>
