@@ -67,14 +67,19 @@ module.exports = {
   },
   store: async (req, res) => {
     try {
-      const { name, barberId } = req.body;
+      const { name, email, password, barberId } = req.body;
       const barber = await Barber.findOne({ _id: barberId });
 
-      const kapster = await Kapster.create({
+      const kapster = new Kapster({
         name,
+        email,
+        password,
         barberId,
         imageUrl: `uploads/${req.file.filename}`,
       });
+      await kapster.save();
+      await kapster.createUser();
+
       barber.kapsterId.push({ _id: kapster._id });
       await barber.save();
       res.redirect("/kapster");
@@ -109,14 +114,21 @@ module.exports = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, barberId } = req.body;
+      const { name, email, password, barberId } = req.body;
       const kapster = await Kapster.findOne({ _id: id }).populate({
         path: "barberId",
         select: "id name",
       });
       if (req.file === undefined) {
         kapster.name = name;
+        kapster.email = email;
+        kapster.password = password;
         kapster.barberId = barberId;
+        await kapster.updateUser({
+          name,
+          email,
+          password,
+        });
         await kapster.save();
         req.flash("alertMessage", "Success Update Kapster");
         req.flash("alertStatus", "green");
@@ -124,8 +136,16 @@ module.exports = {
       } else {
         await fs.unlink(path.join(`public/${kapster.imageUrl}`));
         kapster.name = name;
+        kapster.email = email;
+        kapster.password = password;
         kapster.barberId = barberId;
         kapster.imageUrl = `uploads/${req.file.filename}`;
+        await kapster.updateUser({
+          name,
+          email,
+          password,
+          imageUrl: kapster.imageUrl,
+        });
         await kapster.save();
         req.flash("alertMessage", "Success Update Kapster");
         req.flash("alertStatus", "green");
@@ -139,8 +159,19 @@ module.exports = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
-      const kapster = await Kapster.findOneAndRemove({ _id: id });
+      const kapster = await Kapster.findOne({ _id: id }).populate("barberId");
+      const barber = await Barber.findOne({
+        _id: kapster.barberId._id,
+      }).populate("kapsterId");
+      await User.deleteOne({ kapster: kapster._id, role: "kapster" });
+      for (let i = 0; i < barber.kapsterId.length; i++) {
+        if (barber.kapsterId[i]._id.toString() === kapster._id.toString()) {
+          barber.kapsterId.pull({ _id: kapster._id });
+          await barber.save();
+        }
+      }
       await fs.unlink(path.join(`public/${kapster.imageUrl}`));
+      await kapster.deleteOne();
       req.flash("alertMessage", "Success Delete Kapster");
       req.flash("alertStatus", "green");
       res.redirect("/kapster");

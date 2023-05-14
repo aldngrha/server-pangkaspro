@@ -28,6 +28,13 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin", "barber", "kapster"],
       default: "user",
     },
+    imageUrl: {
+      type: String,
+    },
+    kapster: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Kapster",
+    },
     barber: [
       {
         type: mongoose.Schema.Types.ObjectId,
