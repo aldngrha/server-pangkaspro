@@ -1,0 +1,91 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">Add Status Work</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Tetapkan status kerjamu!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+                <form action="/status/edit/<%= statusKapster._id %>" method="POST">
+                    <div class="flex flex-col md:flex-row md:flex-wrap justify-between gap-y-5 md:gap-x-2 py-2">
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <p class="text-gray-600 font-light mb-2">Status Kapster</p>
+                            <div class="flex">
+                                <% let selectedOption = ""; let showInput = false %> <!-- Variabel selectedOption dengan nilai "yes" -->
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="available"
+                                            onchange="handleRadioChange(event)"
+                                            <% if (selectedOption === 'available') { %>
+                                            checked
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Tersedia</span>
+                                </label>
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="work"
+                                            onchange="handleRadioChange(event)"
+                                            <% if (selectedOption === 'work') { %>
+                                            checked
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Bekerja</span>
+                                </label>
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="unavailable"
+                                            onchange="handleRadioChange(event)"
+                                            <% if (selectedOption === 'unavailable') { %>
+                                            checked
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Tidak Tersedia</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2 invisible" id="work-time">
+                            <div class="flex flex-col gap-y-2">
+                                <label for="time" class="text-gray-600 font-light">Perkiraan waktu selesai (jam berapa)</label>
+                                <input name="time" type="time" value="<%= kapsters.time %>" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: 02:20">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:w-full gap-y-2">
+                            <button type="submit" style="background: #D25B04;" class="py-2 text-white font-semibold rounded-md hover:bg-secondary-hover hover:text-slate-100">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleRadioChange(event) {
+        selectedOption = event.target.value; // Menentukan nilai showInput berdasarkan opsi yang dipilih
+        const workTimeElement = document.getElementById("work-time");
+        if (selectedOption === "work") {
+            showInput = true;
+            workTimeElement.classList.remove("invisible");
+            workTimeElement.classList.add("visible");
+        } else {
+            showInput = false;
+            workTimeElement.classList.remove("visible");
+            workTimeElement.classList.add("invisible");
+        }
+    }
+</script>
+<%- include("../../partials/footer")%>

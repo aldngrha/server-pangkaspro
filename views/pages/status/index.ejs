@@ -1,0 +1,99 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">Status Work</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Kelola status kerjamu!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">Status Work</h1>
+                            <% if(role === "barber" && statusKapster.length !== kapster.length) { %>
+                            <a href="/status/create" class="text-sm mb-2 font-normal text-white px-2 py-2 rounded-md bg-secondary hover:bg-secondary-hover hover:text-gray-100"><i class="bx bx-plus mr-1"></i>Tambah</a>
+                            <%}%>
+                        </div>
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Nama Kapster
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Waktu
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                                <span class="sr-only">Action</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(let i = 0; i < statusKapster.length; i++) {%>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= statusKapster[i].kapsterId.name %>
+                                </th>
+                                <td class="px-6 py-4">
+                                  <span id="status-<%= statusKapster[i]._id %>">
+                                      <% if(statusKapster[i].status === "work") {%>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">Bekerja</span>
+                                      <%} else if (statusKapster[i].status === "available") {%>
+                                          <span class="py-1 px-3 bg-green-500 text-white rounded-full">Tersedia</span>
+                                      <%} else { %>
+                                          <span class="py-1 px-3 bg-red-700 text-white rounded-full">Tidak Tersedia</span>
+                                      <%}%>
+                                  </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <% if(statusKapster[i].time === "") {%>
+                                        <i class="bx bx-time mr-2"></i><span id="countdown-<%= statusKapster[i]._id %>">--:--</span>
+                                    <%} else {%>
+                                        <i class="bx bx-time mr-2"></i><span id="countdown-<%= statusKapster[i]._id %>"><%= statusKapster[i].time %></span>
+                                    <%}%>
+                                </td>
+                                <td class="px-6 py-4 flex">
+                                    <a href="/status/edit/<%= statusKapster[i]._id %>" class="p-2 mr-1 bg-yellow-300 rounded-md text-white hover:bg-yellow-500"><i class="bx bxs-pencil"></i></a>
+                                </td>
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    // Mendengarkan peristiwa 'countdownUpdate'
+    socket.on('countdownUpdate', function(data) {
+        const kapsterIndex = data.id; // Sesuaikan dengan id/posisi kapster pada loop awal
+        const countdownElement = document.getElementById(`countdown-${kapsterIndex}`);
+        countdownElement.innerText = data.countdown;
+    });
+
+    // Mendengarkan peristiwa 'statusUpdate'
+    socket.on('statusUpdate', function(data) {
+        const kapsterIndex = data.id; // Sesuaikan dengan id/posisi kapster pada loop awal
+        const statusElement = document.getElementById(`status-${kapsterIndex}`);
+
+        // Mengubah kelas elemen status berdasarkan status yang baru
+        if (data.status === 'work') {
+            statusElement.innerHTML = '<span class="py-1 px-3 bg-yellow-300 text-white rounded-full">Bekerja</span>';
+        } else if (data.status === 'available') {
+            statusElement.innerHTML = '<span class="py-1 px-3 bg-green-500 text-white rounded-full">Tersedia</span>';
+        } else {
+            statusElement.innerHTML = '<span class="py-1 px-3 bg-red-700 text-white rounded-full">Tidak Tersedia</span>';
+        }
+    });
+</script>
+<%- include("../../partials/footer")%>

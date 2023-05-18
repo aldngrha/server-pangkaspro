@@ -7,12 +7,18 @@ const logger = require("morgan");
 const session = require("express-session");
 const flash = require("connect-flash");
 const cors = require("cors");
+const { Server } = require("socket.io");
+const http = require("http");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const URL = `/api/v1`;
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+app.set("io", io);
 app.use(cors());
 
 // view engine setup
@@ -36,6 +42,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
 app.use("/", indexRouter);
 
 //api
@@ -57,4 +68,4 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+module.exports = { app, server, io };
