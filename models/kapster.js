@@ -25,6 +25,10 @@ const KapsterSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Barber",
     },
+    statusId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
+    },
   },
   { timestamps: true }
 );

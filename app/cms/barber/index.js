@@ -3,6 +3,7 @@ const path = require("path");
 const Barber = require("../../../models/barber");
 const User = require("../../../models/user");
 const Image = require("../../../models/image");
+const Kapster = require("../../../models/kapster");
 
 module.exports = {
   index: async (req, res) => {
@@ -162,9 +163,9 @@ module.exports = {
   delete: async (req, res) => {
     try {
       const { id } = req.params;
-      const barber = await Barber.findOneAndRemove({ _id: id }).populate(
-        "imageId"
-      );
+      const barber = await Barber.findOneAndRemove({ _id: id })
+        .populate("imageId")
+        .populate("kapsterId");
       for (let i = 0; i < barber.imageId.length; i++) {
         Image.findOneAndRemove({ _id: barber.imageId[i]._id })
           .then((image) => {
@@ -177,6 +178,7 @@ module.exports = {
             res.redirect("/barber");
           });
       }
+      await Kapster.deleteOne({ barberId: barber._id });
       req.flash("alertMessage", "Success delete Barber");
       req.flash("alertStatus", "green");
       res.redirect("/barber");

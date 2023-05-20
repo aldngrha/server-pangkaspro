@@ -3,6 +3,7 @@ const path = require("path");
 const User = require("../../../models/user");
 const Barber = require("../../../models/barber");
 const Kapster = require("../../../models/kapster");
+const Status = require("../../../models/status");
 
 module.exports = {
   index: async (req, res) => {
@@ -170,6 +171,8 @@ module.exports = {
           await barber.save();
         }
       }
+      // Menghapus status yang terkait dengan kapster
+      await Status.deleteOne({ kapsterId: kapster._id });
       await fs.unlink(path.join(`public/${kapster.imageUrl}`));
       await kapster.deleteOne();
       req.flash("alertMessage", "Success Delete Kapster");

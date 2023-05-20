@@ -109,6 +109,8 @@ module.exports = {
     try {
       const { kapsterId, statusOption, time } = req.body;
 
+      const kapster = await Kapster.findOne({ _id: kapsterId });
+
       const newStatus = {
         kapsterId,
         status: statusOption,
@@ -117,6 +119,9 @@ module.exports = {
 
       const statusWork = new Status(newStatus);
       await statusWork.save();
+
+      kapster.statusId = statusWork._id;
+      await kapster.save();
 
       res.redirect("/status");
     } catch (error) {
