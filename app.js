@@ -11,7 +11,7 @@ const { Server } = require("socket.io");
 const http = require("http");
 
 const indexRouter = require("./routes/index");
-const authRouter = require("./routes/auth");
+const apiRouter = require("./routes/api");
 const URL = `/api/v1`;
 
 const app = express();
@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 
 //api
-app.use(`${URL}/auth`, authRouter);
+app.use(`${URL}`, apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
