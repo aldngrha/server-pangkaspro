@@ -3,6 +3,7 @@ const Dashboard = require("../app/cms/dashboard");
 const Barber = require("../app/cms/barber");
 const Kapster = require("../app/cms/kapster");
 const Status = require("../app/cms/status");
+const Transaction = require("../app/cms/transaction");
 const Auth = require("../app/cms/auth");
 const { allRole, isBarber, isKapster } = require("../middlewares/auth");
 const { uploadMultiple, uploadSingle } = require("../middlewares/multer");
@@ -34,5 +35,7 @@ router.get("/status/create", isBarber, Status.create);
 router.post("/status/create", isBarber, Status.store);
 router.get("/status/edit/:id", isBarber, Status.edit);
 router.post("/status/edit/:id", isBarber, Status.update);
+
+router.get("/transaction", isBarber, Transaction.index);
 
 module.exports = router;

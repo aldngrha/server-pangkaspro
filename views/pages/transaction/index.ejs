@@ -1,0 +1,108 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">My Transaction</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Kelola transaksimu!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">My Kapster List</h1>
+                            <a href="/kapster/create" class="text-sm mb-2 font-normal text-white px-2 py-2 rounded-md bg-secondary hover:bg-secondary-hover hover:text-gray-100"><i class="bx bx-plus mr-1"></i>Tambah</a>
+                        </div>
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Invoice
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Tanggal
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Barbershop
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Nama Member
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                                <span class="sr-only">Action</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% for(let i = 0; i < transactions.length; i++) {%>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <%= transactions[i].invoiceNumber %>
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transactions[i].createdAt.toLocaleString() %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= transactions[i].barberId.name %>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <%= transactions[i].userId.name %>
+                                </td>
+                                <td class="px-6 py-4">
+                                  <span id="status-<%= transactions[i]._id %>">
+                                      <% if(transactions[i].status === "pending") {%>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING</span>
+                                      <%} else if (transactions[i].status === "pending approval") {%>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING APPROVAL ADDONS</span>
+                                      <%}else if (transactions[i].status === "ongoing") {%>
+                                          <span class="py-1 px-3 bg-blue-600 text-white rounded-full">ONGOING</span>
+                                      <%} else if (transactions[i].status === "completed") {%>
+                                          <span class="py-1 px-3 bg-green-500 text-white rounded-full">COMPLETED</span>
+                                      <%} else { %>
+                                          <span class="py-1 px-3 bg-red-700 text-white rounded-full">CANCELED</span>
+                                      <%}%>
+                                  </span>
+                                </td>
+                                <td class="px-6 py-4 flex">
+                                    <a href="" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-700"><i class="fa fa-eye"></i></a>
+                                    <% if(transactions[i].status === "pending") {%>
+                                        <form action="/transaction/accept" method="POST">
+                                            <button class="p-2 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </form>
+                                        <form action="/transaction/decline">
+                                            <button class="p-2 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </form>
+                                    <%} else if (transactions[i].status === "pending approval") {%>
+                                        <form action="/transaction/approve-addons" method="POST">
+                                            <button class="p-2 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </form>
+                                        <form action="/transaction/decline-addons">
+                                            <button class="p-2 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </form>
+                                    <%}%>
+                                </td>
+                            </tr>
+                        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../../partials/footer")%>

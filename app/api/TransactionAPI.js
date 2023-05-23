@@ -127,12 +127,11 @@ const AddonsTransaction = async (req, res) => {
       return res.status(404).json({ message: "Barbershop not found" });
     }
 
-    // Hitung totalAmount baru dengan memperhitungkan add-ons
-    let total = transaction.totalAmount;
-
     addOns.forEach((addOn) => {
       transaction.addOns.push({ ...addOn, isApproved: false });
     });
+
+    transaction.status = "Pending Approval";
 
     // addOns.forEach((addOn) => {
     //   const { quantity } = addOn;
