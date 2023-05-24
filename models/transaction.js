@@ -74,10 +74,6 @@ const transactionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Kapster",
     },
-    statusId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Status",
-    },
   },
   { timestamps: true }
 );

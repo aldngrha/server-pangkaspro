@@ -6,12 +6,6 @@ const StatusSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Kapster",
     },
-    transactionId: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Transaction",
-      },
-    ],
     status: {
       type: String,
       enum: ["available", "work", "unavailable"],

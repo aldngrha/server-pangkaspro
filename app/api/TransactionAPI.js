@@ -133,15 +133,6 @@ const AddonsTransaction = async (req, res) => {
 
     transaction.status = "pending approval";
 
-    // addOns.forEach((addOn) => {
-    //   const { quantity } = addOn;
-    //   const addOnPrice = barber.price * quantity;
-    //   total += addOnPrice;
-    // });
-    //
-    // // Update totalAmount pada transaksi
-    // transaction.totalAmount = total;
-
     // Simpan perubahan ke database
     await transaction.save();
 

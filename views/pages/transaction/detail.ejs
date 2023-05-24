@@ -187,7 +187,7 @@
                                 </button>
                             </form>
                         </div>
-                    <%} else if (transaction.status === "pending approval") {%>
+                    <%} else if (transaction.status === "pending approval" && transaction.payments.paymentMethod === "Transfer") {%>
                     <div class="flex justify-end p-5">
                         <form action="/transaction/approve-addons/<%= transaction._id %>?_method=PUT" method="POST">
                             <button class="py-1 px-5 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
@@ -209,4 +209,20 @@
         </div>
     </div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    // Mendengarkan peristiwa 'statusUpdate'
+    socket.on('transactionStatusUpdate', function(data) {
+        const transactionId = data.transactionId; // Sesuaikan dengan id/posisi status pada loop awal
+        const statusElement = document.getElementById(`status-${transactionId}`);
+
+        // Mengubah kelas elemen status berdasarkan status yang baru
+        if (data.status === 'completed') {
+            statusElement.innerHTML = '<span class="py-1 px-3 bg-green-500 text-white rounded-full">COMPLETED</span>';
+        }
+    });
+</script>
 <%- include("../../partials/footer")%>

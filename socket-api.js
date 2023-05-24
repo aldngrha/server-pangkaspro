@@ -1,6 +1,7 @@
 const { io } = require("./app");
 const { statusEmitter } = require("./app/cms/status");
 const moment = require("moment");
+const Transaction = require("./models/transaction");
 
 const socketApi = () => {
   io.on("connection", (socket) => {
@@ -58,6 +59,21 @@ const socketApi = () => {
             data.status = "available";
 
             await data.save();
+
+            // Mengubah status transaksi menjadi "completed" di sini
+            const transactions = await Transaction.find({
+              kapsterId: data.kapsterId,
+            });
+
+            transactions.forEach(async (transaction) => {
+              transaction.status = "completed"; // Ubah status sesuai kebutuhan Anda
+              await transaction.save();
+              // Mengirim event emit untuk mengupdate status transaksi
+              io.emit("transactionStatusUpdate", {
+                transactionId: transaction._id,
+                status: "completed",
+              });
+            });
 
             io.emit("statusUpdate", {
               id: data._id,
