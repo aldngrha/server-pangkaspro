@@ -58,7 +58,9 @@ module.exports = {
       delete user._doc.password;
 
       // kirim response dengan data user
-      res.status(201).json({ data: user });
+      res
+        .status(201)
+        .json({ status: 201, message: "Successfully registered", data: user });
     } catch (error) {
       if (error && error.name === "ValidationError") {
         console.error(error);

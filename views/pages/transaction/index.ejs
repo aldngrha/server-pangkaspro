@@ -14,8 +14,7 @@
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                            <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">My Kapster List</h1>
-                            <a href="/kapster/create" class="text-sm mb-2 font-normal text-white px-2 py-2 rounded-md bg-secondary hover:bg-secondary-hover hover:text-gray-100"><i class="bx bx-plus mr-1"></i>Tambah</a>
+                            <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">My Transaction List</h1>
                         </div>
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -30,6 +29,9 @@
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Nama Member
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Pembayaran
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Status
@@ -56,11 +58,14 @@
                                     <%= transactions[i].userId.name %>
                                 </td>
                                 <td class="px-6 py-4">
+                                    <%= transactions[i].payments.paymentMethod %>
+                                </td>
+                                <td class="px-6 py-4">
                                   <span id="status-<%= transactions[i]._id %>">
                                       <% if(transactions[i].status === "pending") {%>
                                           <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING</span>
                                       <%} else if (transactions[i].status === "pending approval") {%>
-                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING APPROVAL ADDONS</span>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">ADDONS</span>
                                       <%}else if (transactions[i].status === "ongoing") {%>
                                           <span class="py-1 px-3 bg-blue-600 text-white rounded-full">ONGOING</span>
                                       <%} else if (transactions[i].status === "completed") {%>
@@ -71,30 +76,7 @@
                                   </span>
                                 </td>
                                 <td class="px-6 py-4 flex">
-                                    <a href="" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-700"><i class="fa fa-eye"></i></a>
-                                    <% if(transactions[i].status === "pending") {%>
-                                        <form action="/transaction/accept" method="POST">
-                                            <button class="p-2 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
-                                                <i class="fa fa-check"></i>
-                                            </button>
-                                        </form>
-                                        <form action="/transaction/decline">
-                                            <button class="p-2 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </form>
-                                    <%} else if (transactions[i].status === "pending approval") {%>
-                                        <form action="/transaction/approve-addons" method="POST">
-                                            <button class="p-2 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
-                                                <i class="fa fa-check"></i>
-                                            </button>
-                                        </form>
-                                        <form action="/transaction/decline-addons">
-                                            <button class="p-2 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </form>
-                                    <%}%>
+                                    <a href="/transaction/<%= transactions[i]._id %>" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-700"><i class="fa fa-eye"></i></a>
                                 </td>
                             </tr>
                         <%}%>

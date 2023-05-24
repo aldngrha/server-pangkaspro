@@ -16,6 +16,14 @@ const DetailBarbershop = async (req, res) => {
           select: "_id status time",
         },
       });
+
+    if (!barbershop) {
+      return res.status(404).json({
+        status: 404,
+        message: "Barbershop not found",
+      });
+    }
+
     res.status(200).json({
       status: 200,
       message: "Data successfully found",

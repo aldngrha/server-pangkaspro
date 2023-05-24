@@ -37,5 +37,18 @@ router.get("/status/edit/:id", isBarber, Status.edit);
 router.post("/status/edit/:id", isBarber, Status.update);
 
 router.get("/transaction", isBarber, Transaction.index);
+router.get("/transaction/:id", isBarber, Transaction.detail);
+router.post("/transaction/accept/:id", isBarber, Transaction.acceptOrder);
+router.post("/transaction/reject/:id", isBarber, Transaction.rejectOrder);
+router.put(
+  "/transaction/approve-addons/:id",
+  isBarber,
+  Transaction.approveAddons
+);
+router.put(
+  "/transaction/decline-addons/:id",
+  isBarber,
+  Transaction.declineAddons
+);
 
 module.exports = router;

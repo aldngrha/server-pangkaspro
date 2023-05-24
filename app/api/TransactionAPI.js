@@ -128,10 +128,10 @@ const AddonsTransaction = async (req, res) => {
     }
 
     addOns.forEach((addOn) => {
-      transaction.addOns.push({ ...addOn, isApproved: false });
+      transaction.addOns.push({ ...addOn, isApproved: "pending" });
     });
 
-    transaction.status = "Pending Approval";
+    transaction.status = "pending approval";
 
     // addOns.forEach((addOn) => {
     //   const { quantity } = addOn;

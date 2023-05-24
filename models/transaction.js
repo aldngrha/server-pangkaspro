@@ -47,13 +47,7 @@ const transactionSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: [
-        "pending",
-        "ongoing",
-        "completed",
-        "cancelled",
-        "pending approval",
-      ],
+      enum: ["pending", "ongoing", "completed", "rejected", "pending approval"],
       default: "pending",
     },
     addOns: [
@@ -62,8 +56,9 @@ const transactionSchema = new mongoose.Schema(
           type: Number,
         },
         isApproved: {
-          type: Boolean,
-          default: false, // Default value is false, indicating not approved
+          type: String,
+          enum: ["pending", "approve", "decline"],
+          default: "pending", // Default value is false, indicating not approved
         },
       },
     ],
