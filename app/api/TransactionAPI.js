@@ -152,4 +152,122 @@ const AddonsTransaction = async (req, res) => {
   }
 };
 
-module.exports = { CreateTransaction, AddonsTransaction };
+const GetAllTransaction = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const transaction = await Transaction.find({ userId: user })
+      .select("_id invoiceNumber createdAt quantity name totalAmount status")
+      .populate({
+        path: "barberId",
+        select: "_id name",
+        populate: {
+          path: "kapsterId",
+          select: "_id name",
+        },
+      });
+
+    if (!transaction) {
+      return res.status(404).json({
+        status: 404,
+        message: "Transaction not found, please order at least one",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: "Successfully get all transaction",
+      data: {
+        transaction,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+};
+
+const GetOneTransaction = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const { id } = req.params;
+    const transaction = await Transaction.findOne({
+      _id: id,
+      userId: user,
+    }).populate({
+      path: "barberId",
+      select: "_id name",
+    });
+
+    if (!transaction) {
+      return res.status(404).json({
+        status: 404,
+        message: "Transaction not found, please order at least one",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: "Successfully get one transaction",
+      data: {
+        transaction,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+};
+
+const GetOngoingTransaction = async (req, res) => {
+  try {
+    const user = req.user._id;
+    const transaction = await Transaction.find({
+      userId: user,
+      status: "ongoing",
+    })
+      .select("_id invoiceNumber createdAt quantity name totalAmount status")
+      .populate({
+        path: "barberId",
+        select: "_id name",
+        populate: {
+          path: "kapsterId",
+          select: "_id name",
+        },
+      });
+
+    if (!transaction) {
+      return res.status(404).json({
+        status: 404,
+        message: "Transaction not found, please order at least one",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: "Successfully get one transaction",
+      data: {
+        transaction,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+};
+
+module.exports = {
+  CreateTransaction,
+  AddonsTransaction,
+  GetAllTransaction,
+  GetOneTransaction,
+  GetOngoingTransaction,
+};

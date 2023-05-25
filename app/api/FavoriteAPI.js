@@ -2,7 +2,7 @@ const Barber = require("../../models/barber");
 const Favorite = require("../../models/favorite");
 const FavoriteBarbershop = async (req, res) => {
   try {
-    const { barberId } = req.body;
+    const { barberId } = req.params;
     const userId = req.user._id;
 
     // Periksa apakah barbershop dengan ID yang diberikan tersedia
