@@ -63,6 +63,7 @@ const socketApi = () => {
             // Mengubah status transaksi menjadi "completed" di sini
             const transactions = await Transaction.find({
               kapsterId: data.kapsterId,
+              status: "ongoing",
             });
 
             transactions.forEach(async (transaction) => {

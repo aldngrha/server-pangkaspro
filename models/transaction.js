@@ -60,6 +60,9 @@ const transactionSchema = new mongoose.Schema(
           enum: ["pending", "approve", "decline"],
           default: "pending", // Default value is false, indicating not approved
         },
+        totalAddon: {
+          type: Number,
+        },
       },
     ],
     userId: {

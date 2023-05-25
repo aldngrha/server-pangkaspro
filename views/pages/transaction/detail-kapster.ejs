@@ -153,9 +153,9 @@
                                 <tbody>
                                 <% if (transaction.addOns && transaction.addOns.length > 0) { %>
                                     <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <%= transaction.addOns[0].quantity %> <!-- Mengambil quantity dari elemen pertama -->
-                                        </td>
+                                        </th>
                                         <td class="px-6 py-4">
                                             Rp<%= transaction.addOns[0].totalAddon.toLocaleString() %> <!-- Mengambil quantity dari elemen pertama -->
                                         </td>
@@ -180,27 +180,14 @@
                         </tr>
                         </tbody>
                     </table>
-                    <% if(transaction.status === "pending") {%>
-                        <div class="flex justify-end p-5">
-                            <form action="/transaction/accept/<%= transaction._id %>" method="POST">
-                                <button class="py-1 px-5 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
-                                    <i class="fa fa-check"></i>
-                                </button>
-                            </form>
-                            <form action="/transaction/reject/<%= transaction._id %>" method="POST">
-                                <button class="py-1 px-5 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
-                                    <i class="fa fa-times"></i>
-                                </button>
-                            </form>
-                        </div>
-                    <%} else if (transaction.status === "pending approval" && transaction.payments.paymentMethod === "Transfer") {%>
+                    <% if (transaction.status === "pending approval" && transaction.payments.paymentMethod === "Bayar ditempat") {%>
                     <div class="flex justify-end p-5">
-                        <form action="/transaction/approve-addons/<%= transaction._id %>?_method=PUT" method="POST">
+                        <form action="/cash-on-delivery/approve-addons/<%= transaction._id %>?_method=PUT" method="POST">
                             <button class="py-1 px-5 mr-1 bg-green-600 rounded-md text-md text-white hover:bg-green-800">
                                 <i class="fa fa-check"></i>
                             </button>
                         </form>
-                        <form action="/transaction/decline-addons/<%= transaction._id %>?_method=PUT" method="POST">
+                        <form action="/cash-on-delivery/decline-addons/<%= transaction._id %>?_method=PUT" method="POST">
                             <button class="py-1 px-5 mr-1 bg-red-600 rounded-md text-md text-white hover:bg-red-700">
                                 <i class="fa fa-times"></i>
                             </button>

@@ -8,23 +8,26 @@ module.exports = {
       const session = req.session.user;
       const user = await User.findById(session.id);
       let barbers;
-      if (user.role === "barber") {
-        barbers = await Barber.find({ _id: user.barber });
+      if (user.role === "kapster") {
+        barbers = await Barber.find({ kapsterId: user.kapster });
       }
 
       const barberIds = barbers.map((barber) => barber._id);
 
       const transactions = await Transaction.find({
         barberId: { $in: barberIds },
+        "payments.paymentMethod": "Bayar ditempat",
       })
         .populate({ path: "barberId", select: "_id name" })
         .populate({ path: "userId", select: "_id name" });
+
+      console.log(transactions);
 
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
 
-      res.render("pages/transaction/index", {
+      res.render("pages/transaction/index-kapster", {
         name: session.name,
         role: session.role,
         url: req.url,
@@ -35,7 +38,7 @@ module.exports = {
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "red");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     }
   },
   detail: async (req, res) => {
@@ -54,7 +57,7 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
 
-      res.render("pages/transaction/detail", {
+      res.render("pages/transaction/detail-kapster", {
         name: session.name,
         role: session.role,
         url: req.url,
@@ -65,55 +68,13 @@ module.exports = {
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "red");
-      res.redirect("/transaction");
-    }
-  },
-  acceptOrder: async (req, res) => {
-    try {
-      const { id } = req.params;
-
-      const transaction = await Transaction.findOne({
-        _id: id,
-      });
-
-      // Ubah status transaksi menjadi 'ongoing'
-      transaction.status = "ongoing";
-      await transaction.save();
-
-      req.flash("alertMessage", "Success Confirm Order");
-      req.flash("alertStatus", "green");
-      res.redirect("/transaction");
-    } catch (error) {
-      req.flash("alertMessage", `${error.message}`);
-      req.flash("alertStatus", "red");
-      res.redirect("/transaction");
-    }
-  },
-  rejectOrder: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const session = req.session.user;
-
-      const transaction = await Transaction.findOne({
-        _id: id,
-      });
-
-      // Ubah status transaksi menjadi 'ongoing'
-      transaction.status = "rejected";
-      await transaction.save();
-
-      req.flash("alertMessage", "Success Reject Order");
-      req.flash("alertStatus", "green");
-      res.redirect("/transaction");
-    } catch (error) {
-      req.flash("alertMessage", `${error.message}`);
-      req.flash("alertStatus", "red");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     }
   },
   approveAddons: async (req, res) => {
     try {
       const { id } = req.params;
+      const session = req.session.user;
 
       const transaction = await Transaction.findOne({
         _id: id,
@@ -137,20 +98,18 @@ module.exports = {
       // Update totalAmount pada transaksi
       transaction.totalAmount = total;
       await transaction.save();
-
       req.flash("alertMessage", "Success Confirm Addons");
       req.flash("alertStatus", "green");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "red");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     }
   },
   declineAddons: async (req, res) => {
     try {
       const { id } = req.params;
-      const session = req.session.user;
 
       const transaction = await Transaction.findOne({
         _id: id,
@@ -164,14 +123,13 @@ module.exports = {
       transaction.status = "ongoing";
 
       await transaction.save();
-
-      req.flash("alertMessage", "Success Decline Addons");
+      req.flash("alertMessage", "Success Update Kapster");
       req.flash("alertStatus", "green");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "red");
-      res.redirect("/transaction");
+      res.redirect("/cash-on-delivery");
     }
   },
 };

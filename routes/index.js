@@ -4,6 +4,7 @@ const Barber = require("../app/cms/barber");
 const Kapster = require("../app/cms/kapster");
 const Status = require("../app/cms/status");
 const Transaction = require("../app/cms/transaction");
+const TransactionKapster = require("../app/cms/transaction-kapster");
 const Auth = require("../app/cms/auth");
 const { allRole, isBarber, isKapster } = require("../middlewares/auth");
 const { uploadMultiple, uploadSingle } = require("../middlewares/multer");
@@ -49,6 +50,19 @@ router.put(
   "/transaction/decline-addons/:id",
   isBarber,
   Transaction.declineAddons
+);
+
+router.get("/cash-on-delivery", isKapster, TransactionKapster.index);
+router.get("/cash-on-delivery/:id", isKapster, TransactionKapster.detail);
+router.put(
+  "/cash-on-delivery/approve-addons/:id",
+  isKapster,
+  TransactionKapster.approveAddons
+);
+router.put(
+  "/cash-on-delivery/decline-addons/:id",
+  isKapster,
+  TransactionKapster.declineAddons
 );
 
 module.exports = router;
