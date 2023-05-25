@@ -12,7 +12,6 @@ const CreateTransaction = async (req, res) => {
       phoneNumber,
       address,
       paymentMethod,
-      image,
       accountHolder,
       bankName,
     } = req.body;

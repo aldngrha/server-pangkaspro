@@ -113,4 +113,58 @@ module.exports = {
         next();
       });
   },
+  changePassword: async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const { currentPassword, newPassword, confirmPassword } = req.body;
+
+      // Periksa apakah pengguna ada berdasarkan ID
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({
+          status: 404,
+          message: "User not found",
+        });
+      }
+
+      // Periksa kecocokan password saat ini
+      const isPasswordValid = await bcrypt.compare(
+        currentPassword,
+        user.password
+      );
+      if (!isPasswordValid) {
+        return res.status(400).json({
+          status: 400,
+          message: "Current password is incorrect",
+        });
+      }
+
+      // Periksa kecocokan password baru dan konfirmasi password
+      if (newPassword !== confirmPassword) {
+        return res.status(400).json({
+          status: 400,
+          message: "New password and confirm password do not match",
+        });
+      }
+
+      // Generate hash untuk password baru
+      const salt = await bcrypt.genSalt(10);
+      const newPasswordHash = await bcrypt.hash(newPassword, salt);
+
+      // Update password pengguna
+      user.password = newPasswordHash;
+      await user.save();
+
+      res.status(200).json({
+        status: 200,
+        message: "Password has been changed successfully",
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        status: 500,
+        message: "Internal Server Error",
+      });
+    }
+  },
 };
