@@ -19,7 +19,6 @@ const KapsterSchema = new mongoose.Schema(
     },
     imageUrl: {
       type: String,
-      required: [true, "Foto harus diisi"],
     },
     barberId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -2,11 +2,11 @@ const Barber = require("../../models/barber");
 const Favorite = require("../../models/favorite");
 const FavoriteBarbershop = async (req, res) => {
   try {
-    const { barberId } = req.params;
+    const { id } = req.params;
     const userId = req.user._id;
 
     // Periksa apakah barbershop dengan ID yang diberikan tersedia
-    const barber = await Barber.findById(barberId);
+    const barber = await Barber.findById(id);
     if (!barber) {
       return res
         .status(404)
@@ -16,7 +16,7 @@ const FavoriteBarbershop = async (req, res) => {
     // Cek apakah barbershop sudah ada dalam daftar favorit pengguna
     const existingFavorite = await Favorite.findOne({
       user: userId,
-      barber: barberId,
+      barber: id,
     });
     if (existingFavorite) {
       return res.status(400).json({
@@ -30,12 +30,12 @@ const FavoriteBarbershop = async (req, res) => {
 
     // Jika belum ada, buat dokumen baru
     if (!favorite) {
-      favorite = new Favorite({ user: userId, barber: [barberId] });
+      favorite = new Favorite({ user: userId, barber: [id] });
       await favorite.save();
     } else {
-      // Jika sudah ada, tambahkan barberId ke array barber
-      if (!favorite.barber.includes(barberId)) {
-        favorite.barber.push(barberId);
+      // Jika sudah ada, tambahkan id ke array barber
+      if (!favorite.barber.includes(id)) {
+        favorite.barber.push(id);
         await favorite.save();
       }
     }

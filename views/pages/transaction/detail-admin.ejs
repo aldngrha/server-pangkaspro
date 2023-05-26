@@ -1,0 +1,207 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">Transaction Detail</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Lihat detail transaksi!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <h1 class="md:p-5 mb-2 text-lg font-semibold text-left text-gray-900 bg-white">INVOICE: <%= transaction.invoiceNumber %></h1>
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <tbody>
+                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Nama Member
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.name %>
+                                </td>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                   Nomor Telfon
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.phoneNumber %>
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Jumlah Orang
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.quantity %>
+                                </td>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Alamat
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.address %>
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Barbershop
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.barberId.name %>
+                                </td>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Kapster
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.kapsterId.name %>
+                                </td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Tanggal Order
+                                </th>
+                                <td class="px-6 py-4">
+                                    <%= transaction.createdAt.toLocaleString() %>
+                                </td>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    Status
+                                </th>
+                                <td class="px-6 py-4">
+                                  <span id="status-<%= transaction._id %>">
+                                      <% if(transaction.status === "pending") {%>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING</span>
+                                      <%} else if (transaction.status === "pending approval") {%>
+                                          <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING APPROVAL ADDONS</span>
+                                      <%}else if (transaction.status === "ongoing") {%>
+                                          <span class="py-1 px-3 bg-blue-600 text-white rounded-full">ONGOING</span>
+                                      <%} else if (transaction.status === "completed") {%>
+                                          <span class="py-1 px-3 bg-green-500 text-white rounded-full">COMPLETED</span>
+                                      <%} else { %>
+                                          <span class="py-1 px-3 bg-red-700 text-white rounded-full">CANCELED</span>
+                                      <%}%>
+                                  </span>
+                                </td>
+                            </tr>
+                            <tr class="bg-white">
+                                <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">
+                                    PEMBAYARAN
+                                </th>
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">
+                                                Metode Pembayaran
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Nama Pemilik Rekening
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Bank Asal
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Bukti Pembayaran
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% if(transaction.payments.paymentMethod === "Bayar ditempat") {%>
+                                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                            <th colspan="4" scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap text-center">
+                                                <%= transaction.payments.paymentMethod %>
+                                            </th>
+                                        </tr>
+                                    <%} else {%>
+                                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <%= transaction.payments.paymentMethod %>
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                <%= transaction.payments.accountHolder %>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <%= transaction.payments.bankName %>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <img src="http://localhost:9000/<%= transaction.payments.proofPayment %> " alt="proof payment" width="40px">
+                                            </td>
+                                        </tr>
+                                    <%}%>
+                                    </tbody>
+                                </table>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <tr class="bg-white">
+                            <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap">
+                                ORDER TAMBAHAN
+                            </th>
+                            <table class="w-full text-sm text-left text-gray-500">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Jumlah Orang
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Total Tambahan
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Status
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% if (transaction.addOns && transaction.addOns.length > 0) { %>
+                                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <%= transaction.addOns[0].quantity %> <!-- Mengambil quantity dari elemen pertama -->
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            Rp<%= transaction.addOns[0].totalAddon.toLocaleString() %> <!-- Mengambil quantity dari elemen pertama -->
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <% if(transaction.addOns[0].isApproved === "pending") {%>
+                                                <span class="py-1 px-3 bg-yellow-300 text-white rounded-full">PENDING</span>
+                                            <%} else if(transaction.addOns[0].isApproved === "approve") {%>
+                                                <span class="py-1 px-3 bg-green-600 text-white rounded-full">APPROVE</span>
+                                            <%} else {%>
+                                                <span class="py-1 px-3 bg-red-600 text-white rounded-full">DECLINE</span>
+                                            <%}%>
+                                        </td>
+                                    </tr>
+                                <% } else { %>
+                                    <!-- Tampilkan pesan "Tidak ada order tambahan" -->
+                                    <tr>
+                                        <td colspan="3" class="py-5 text-center">Tidak ada order tambahan</td>
+                                    </tr>
+                                <% } %>
+                                </tbody>
+                            </table>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-6 py-3">
+                        <p class="font-semibold">Total Biaya : Rp<%= transaction.totalAmount.toLocaleString() %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+
+    // Mendengarkan peristiwa 'statusUpdate'
+    socket.on('transactionStatusUpdate', function(data) {
+        const transactionId = data.transactionId; // Sesuaikan dengan id/posisi status pada loop awal
+        const statusElement = document.getElementById(`status-${transactionId}`);
+
+        // Mengubah kelas elemen status berdasarkan status yang baru
+        if (data.status === 'completed') {
+            statusElement.innerHTML = '<span class="py-1 px-3 bg-green-500 text-white rounded-full">COMPLETED</span>';
+        }
+    });
+</script>
+<%- include("../../partials/footer")%>

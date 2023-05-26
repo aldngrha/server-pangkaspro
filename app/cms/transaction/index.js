@@ -174,4 +174,60 @@ module.exports = {
       res.redirect("/transaction");
     }
   },
+  indexAdmin: async (req, res) => {
+    try {
+      const session = req.session.user;
+
+      const transactions = await Transaction.find()
+        .populate({ path: "barberId", select: "_id name" })
+        .populate({ path: "userId", select: "_id name" });
+
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+
+      res.render("pages/transaction/index-admin", {
+        name: session.name,
+        role: session.role,
+        url: req.url,
+        title: "Pangkaspro | My Transaction",
+        alert,
+        transactions,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
+      res.redirect("/transactions");
+    }
+  },
+  detailAdmin: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const session = req.session.user;
+
+      const transaction = await Transaction.findOne({
+        _id: id,
+      })
+        .populate({ path: "barberId", select: "_id name" })
+        .populate({ path: "kapsterId", select: "_id name" })
+        .populate({ path: "userId", select: "_id name" });
+
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+
+      res.render("pages/transaction/detail-admin", {
+        name: session.name,
+        role: session.role,
+        url: req.url,
+        title: "Pangkaspro | My Transaction",
+        alert,
+        transaction,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
+      res.redirect("/transactions");
+    }
+  },
 };

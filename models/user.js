@@ -41,12 +41,6 @@ const UserSchema = new mongoose.Schema(
         ref: "Barber",
       },
     ],
-    favourite: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Barber",
-      },
-    ],
   },
   { timestamps: true }
 );

@@ -1,0 +1,122 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">Add User</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Tambah Pengguna!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+                <form action="/user/create" method="POST">
+                    <div class="flex flex-col md:flex-row md:flex-wrap justify-between gap-y-5 md:gap-x-2 py-2">
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="name" class="text-gray-600 font-light">Nama User</label>
+                            <input name="name" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="email" class="text-gray-600 font-light">Alamat Email</label>
+                            <input name="email" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung@gmail.com">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <label for="password" class="text-gray-600 font-light">Password</label>
+                            <input name="password" type="password" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: ••••••••">
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2">
+                            <p class="text-gray-600 font-light mb-2">Role User</p>
+                            <div class="flex">
+                                <% let selectedOption = ""; let showInput = false %> <!-- Variabel selectedOption dengan nilai "yes" -->
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="user"
+                                            onchange="handleRadioChange(event)"
+                                    <% if (selectedOption === 'user') { %>
+                                            checked="checked"
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Konsumen</span>
+                                </label>
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="barber"
+                                            onchange="handleRadioChange(event)"
+                                    <% if (selectedOption === 'barber') { %>
+                                            checked="checked"
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Barbershop</span>
+                                </label>
+                                <label class="inline-flex items-center mr-6">
+                                    <input
+                                            type="radio"
+                                            class="appearance-none text-green-500"
+                                            name="statusOption"
+                                            value="kapster"
+                                            onchange="handleRadioChange(event)"
+                                    <% if (selectedOption === 'kapster') { %>
+                                            checked="checked"
+                                            <% } %>
+                                    />
+                                    <span class="ml-2 text-gray-500 font-poppins font-light">Kapster</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2 invisible" id="barber-name">
+                            <div class="flex flex-col gap-y-2">
+                                <label for="barberName" class="text-gray-600 font-light">Nama Barbershop</label>
+                                <input name="barberName" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Pangkas Ipung">
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:w-[30rem] gap-y-2 invisible" id="list-barber">
+                            <label for="barberId" class="text-gray-600 font-light">Barbershop</label>
+                            <select name="barberId" id="barberId" class="bg-white border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option selected>Pilih Barber</option>
+                                <% for( let i = 0; i < barbers.length; i++ ) { %>
+                                    <option value="<%= barbers[i]._id %>"><%= barbers[i].name %> </option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="flex flex-col md:w-full gap-y-2">
+                            <button type="submit" style="background: #D25B04;" class="py-2 text-white font-semibold rounded-md hover:bg-secondary-hover hover:text-slate-100">Simpan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleRadioChange(event) {
+        selectedOption = event.target.value; // Menentukan nilai showInput berdasarkan opsi yang dipilih
+        const barberNameElement = document.getElementById("barber-name");
+        if (selectedOption === "barber") {
+            showInput = true;
+            barberNameElement.classList.remove("invisible");
+            barberNameElement.classList.add("visible");
+        } else {
+            showInput = false;
+            barberNameElement.classList.remove("visible");
+            barberNameElement.classList.add("invisible");
+        }
+        const barberListElement = document.getElementById("list-barber");
+        if (selectedOption === "kapster") {
+            showInput = true;
+            barberListElement.classList.remove("invisible");
+            barberListElement.classList.add("visible");
+        } else {
+            showInput = false;
+            barberListElement.classList.remove("visible");
+            barberListElement.classList.add("invisible");
+        }
+    }
+</script>
+<%- include("../../partials/footer")%>

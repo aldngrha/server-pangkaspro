@@ -4,9 +4,15 @@ const Barber = require("../app/cms/barber");
 const Kapster = require("../app/cms/kapster");
 const Status = require("../app/cms/status");
 const Transaction = require("../app/cms/transaction");
+const User = require("../app/cms/user");
 const TransactionKapster = require("../app/cms/transaction-kapster");
 const Auth = require("../app/cms/auth");
-const { allRole, isBarber, isKapster } = require("../middlewares/auth");
+const {
+  allRole,
+  isBarber,
+  isKapster,
+  isAdmin,
+} = require("../middlewares/auth");
 const { uploadMultiple, uploadSingle } = require("../middlewares/multer");
 const router = express.Router();
 
@@ -52,6 +58,9 @@ router.put(
   Transaction.declineAddons
 );
 
+router.get("/transactions", isAdmin, Transaction.indexAdmin);
+router.get("/transactions/:id", isAdmin, Transaction.detailAdmin);
+
 router.get("/cash-on-delivery", isKapster, TransactionKapster.index);
 router.get("/cash-on-delivery/:id", isKapster, TransactionKapster.detail);
 router.put(
@@ -64,5 +73,11 @@ router.put(
   isKapster,
   TransactionKapster.declineAddons
 );
+
+router.get("/user", isAdmin, User.index);
+router.get("/user/create", isAdmin, User.create);
+router.post("/user/create", isAdmin, User.store);
+router.get("/user/edit/:id", isAdmin, User.edit);
+router.put("/user/edit/:id", isAdmin, User.update);
 
 module.exports = router;

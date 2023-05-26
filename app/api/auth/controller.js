@@ -47,7 +47,6 @@ module.exports = {
           phoneNumber: "",
           address: "",
           role: userRole,
-          favourite: [],
         });
       }
 
