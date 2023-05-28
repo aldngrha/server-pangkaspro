@@ -16,10 +16,16 @@ const URL = `/api/v1`;
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:5173",
+		methods: ["GET", "POST"]
+	  }
+});
 
-app.set("io", io);
+
 app.use(cors());
+app.set("io", io);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

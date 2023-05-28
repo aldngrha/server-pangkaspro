@@ -1,9 +1,6 @@
 const User = require("../../../models/user");
 const Barber = require("../../../models/barber");
 const Kapster = require("../../../models/kapster");
-const Favorite = require("../../../models/favorite");
-const Transaction = require("../../../models/transaction");
-const Rating = require("../../../models/rating");
 
 module.exports = {
   index: async (req, res) => {

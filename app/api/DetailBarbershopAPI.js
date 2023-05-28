@@ -10,7 +10,7 @@ const DetailBarbershop = async (req, res) => {
       })
       .populate({
         path: "kapsterId",
-        select: "_id name",
+        select: "_id name imageUrl",
         populate: {
           path: "statusId",
           select: "_id status time",
