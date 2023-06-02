@@ -42,7 +42,7 @@ router.get("/transaction", isUser, GetOngoingTransaction);
 router.post("/transaction", isUser, uploadSingle, CreateTransaction);
 router.post("/transaction/:id/addons", isUser, AddonsTransaction);
 
-router.get("/invoice/:id/download", GetInvoice);
+router.get("/invoice/:id/download", isUser, GetInvoice);
 
 router.post("/rating/:id/barbershop", isUser, AddRating);
 
