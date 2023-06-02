@@ -157,7 +157,7 @@
                                             <%= transaction.addOns[0].quantity %> <!-- Mengambil quantity dari elemen pertama -->
                                         </td>
                                         <td class="px-6 py-4">
-                                            Rp<%= transaction.addOns[0].totalAddon.toLocaleString() %> <!-- Mengambil quantity dari elemen pertama -->
+                                            Rp<%= transaction.addOns[0].totalAddon.toLocaleString("id-ID") %> <!-- Mengambil quantity dari elemen pertama -->
                                         </td>
                                         <td class="px-6 py-4">
                                             <% if(transaction.addOns[0].isApproved === "pending") {%>

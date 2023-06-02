@@ -60,7 +60,7 @@ const GetFavBarbershop = async (req, res) => {
     const userId = req.user._id;
 
     // Cari semua favorit berdasarkan ID pengguna
-    const favorites = await Favorite.find({ user: userId }).populate("barber");
+    const favorites = await Favorite.find({ user: userId }).populate({path: "barber", populate: { path: "imageId", select: "_id imageUrl"}});
 
     res.status(200).json({
       status: 200,
@@ -77,4 +77,34 @@ const GetFavBarbershop = async (req, res) => {
   }
 };
 
-module.exports = { FavoriteBarbershop, GetFavBarbershop };
+const GetOneFavBarbershop = async (req, res) => {
+  try {
+	const { id } = req.params;  
+	const userId = req.user._id;
+
+    // Cari semua favorit berdasarkan ID pengguna
+    const favorite = await Favorite.findOne({ user: userId, barber: id }).populate("barber");
+	
+	if (!favorite) {
+      return res.status(404).json({
+        status: 404,
+        message: "Favorite not found",
+      });
+    }
+
+    res.status(200).json({
+      status: 200,
+      message: "Favorites successfully retrieved",
+      data: {
+        favorite,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      message: "Failed to retrieve favorites",
+    });
+  }
+};
+
+module.exports = { FavoriteBarbershop, GetFavBarbershop, GetOneFavBarbershop };

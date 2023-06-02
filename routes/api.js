@@ -11,6 +11,7 @@ const { isUser } = require("../middlewares/auth");
 const {
   FavoriteBarbershop,
   GetFavBarbershop,
+  GetOneFavBarbershop,
 } = require("../app/api/FavoriteAPI");
 const {
   CreateTransaction,
@@ -32,6 +33,7 @@ router.get("/landing-page", LandingPage);
 router.get("/detail/:id/barbershop", DetailBarbershop);
 
 router.post("/favorite/:id", isUser, FavoriteBarbershop);
+router.get("/favorite/:id", isUser, GetOneFavBarbershop);
 router.get("/favorites", isUser, GetFavBarbershop);
 
 router.get("/transactions", isUser, GetAllTransaction);
@@ -40,7 +42,7 @@ router.get("/transaction", isUser, GetOngoingTransaction);
 router.post("/transaction", isUser, uploadSingle, CreateTransaction);
 router.post("/transaction/:id/addons", isUser, AddonsTransaction);
 
-router.get("/invoice/:id/download", isUser, GetInvoice);
+router.get("/invoice/:id/download", GetInvoice);
 
 router.post("/rating/:id/barbershop", isUser, AddRating);
 
