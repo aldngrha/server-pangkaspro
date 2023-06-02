@@ -5,10 +5,11 @@ const fs = require("fs");
 const GetInvoice = async (req, res) => {
   try {
     const { id } = req.params;
-    // const user = req.user._id;
+    const user = req.user._id;
 
     const invoice = await Transaction.findOne({
       _id: id,
+      userId: user,
     })
       .populate({ path: "barberId", select: "_id name price" })
       .populate({ path: "kapsterId", select: "_id name" })
