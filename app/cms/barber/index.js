@@ -33,6 +33,32 @@ module.exports = {
       res.redirect("/barber");
     }
   },
+  detail: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const barber = await Barber.findOne({ _id: id }).populate({
+        path: "imageId",
+        select: "id imageUrl",
+      });
+      const session = req.session.user;
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+      const alert = { message: alertMessage, status: alertStatus };
+      console.log(barber);
+      res.render("pages/barber/detail", {
+        name: session.name,
+        role: session.role,
+        url: req.url,
+        title: "Pangkaspro | Edit Barber",
+        alert,
+        barber,
+      });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
+      res.redirect("/barber");
+    }
+  },
   create: async (req, res) => {
     try {
       const session = req.session.user;

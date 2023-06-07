@@ -24,6 +24,7 @@ router.get("/signout", Auth.actionSignout);
 router.get("/dashboard", allRole, Dashboard.dashboard);
 
 router.get("/barber", isBarber, Barber.index);
+router.get("/barber/detail/:id", isBarber, Barber.detail);
 router.get("/barber/create", isBarber, Barber.create);
 router.post("/barber/create", uploadMultiple, isBarber, Barber.store);
 router.get("/barber/edit/:id", isBarber, Barber.edit);

@@ -1,0 +1,82 @@
+<%- include("../../partials/header")%>
+<%- include("../../partials/navbar") %>
+<%- include("../../partials/sidebar") %>
+
+<div class="p-4 sm:ml-64">
+    <div class="p-4 mt-14">
+        <div class="flex flex-col gap-y-2 pb-10 md:-mt-16">
+            <h1 class="text-2xl font-medium">My Detail Barber</h1>
+            <p class="text-md md:text-lg font-light text-gray-400">Lihat detail pangkasmu!</p>
+        </div>
+        <div class="bg-white w-full rounded-lg">
+            <div class="p-6">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <tbody>
+                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Nama Barbershop
+                            </th>
+                            <td class="px-6 py-4">
+                                <%= barber.name %>
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Harga
+                            </th>
+                            <td class="px-6 py-4">
+                                Rp<%= barber.price.toLocaleString("id-ID") %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Nama Akun
+                            </th>
+                            <td class="px-6 py-4">
+                                <%= barber.accountName %>
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Bank/E-Wallet
+                            </th>
+                            <td class="px-6 py-4">
+                                <%= barber.bank %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Nomor Rekening/Nomor Handphone
+                            </th>
+                            <td class="px-6 py-4">
+                                <%= barber.accountNumber %>
+                            </td>
+
+                        </tr>
+                        <tr class="bg-white">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Deskripsi
+                            </th>
+                        </tr>
+                        <tr class="bg-white">
+                            <td class="px-6 pb-4">
+                                <%= barber.description %>
+                            </td>
+                        </tr>
+                        <tr class="bg-white">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Portfolio
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="px-6 pb-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <% barber.imageId.forEach(function(image) { %>
+                        <div>
+                            <img class="h-auto max-w-full rounded-lg" src="http://localhost:9000/<%= image.imageUrl %>" alt="Portfolio">
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("../../partials/footer")%>

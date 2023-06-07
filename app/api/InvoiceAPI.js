@@ -309,7 +309,7 @@ function generateHtmlContent(invoice) {
                           )}</td>
                         </tr>`
                             : `<tr>
-                                <td colspan="3" style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right">Tidak ada order tambahan</td>
+                                <td colspan="3" style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">Tidak ada order tambahan</td>
                                </tr>`
                         }
                         <tr>
@@ -425,7 +425,7 @@ function generateHtmlContent(invoice) {
                                     ${invoice.payments.paymentMethod}<br> Bank: ${invoice.payments.bankName}<br> Pemilik: ${invoice.payments.accountHolder}<br>
                                   </td>`
                                     : `<td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
-                                    $Halo</td>`
+                                    ${invoice.payments.paymentMethod}</td>`
                                 }
                                 </tr>
                               </tbody>

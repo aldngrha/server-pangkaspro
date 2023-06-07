@@ -48,7 +48,7 @@
                             </td>
                             <td class="px-6 py-4 flex">
                                 <form action="/barber/<%= barbers[i].id %>/delete?_method=DELETE" method="POST">
-                                    <a href="" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-800"><i class="fa fa-eye"></i></a>
+                                    <a href="/barber/detail/<%= barbers[i].id %>" class="p-2 mr-1 bg-blue-600 rounded-md text-white hover:bg-blue-800"><i class="fa fa-eye"></i></a>
                                     <a href="/barber/edit/<%= barbers[i].id %>" class="p-2 mr-1 bg-yellow-300 rounded-md text-white hover:bg-yellow-500"><i class="bx bxs-pencil"></i></a>
                                     <button type="submit" class="p-[7px] bg-red-600 rounded-md text-white hover:bg-red-700">
                                         <i class="bx bxs-trash"></i>
