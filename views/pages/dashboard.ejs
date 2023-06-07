@@ -50,7 +50,7 @@
                                 <h5 class="text-xs md:text-lg"><%= transaction.barberId.name %></h5>
                                 <h5 class="text-xs md:text-lg"><%= transaction.userId.name %></h5>
                                 <h5 class="text-xs md:text-lg"><%= transaction.createdAt.toDateString("id-ID") %></h5>
-                                <a href="/transactions/<%= transaction._id %>" class="text-3xl text-gray-400 hover:text-gray-900"><i class="bx bx-chevron-right"></i></a>
+                                <a href="<%= (role === 'admin') ? `/transactions/${transaction._id}` : `/transaction/${transaction._id}` %>" class="text-3xl text-gray-400 hover:text-gray-900"><i class="bx bx-chevron-right"></i></a>
                             </div>
                         </div>
                     <% }); %>
