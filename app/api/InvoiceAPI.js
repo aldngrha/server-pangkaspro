@@ -18,11 +18,11 @@ const GetInvoice = async (req, res) => {
     console.log(invoice);
 
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox"]
+      headless: "new",
+      args: ["--no-sandbox", '--disable-setuid-sandbox'],
+      ignoreDefaultArgs: ['--disable-extensions']
     });
     const page = await browser.newPage();
-
-	console.log(generateHtmlContent(invoice));
 	
     await page.setContent(generateHtmlContent(invoice));
     const pdf = await page.pdf();
