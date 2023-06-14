@@ -45,7 +45,7 @@
                     <% transactions.forEach(transaction => { %>
                         <% const firstImageUrl = transaction.barberId.imageId[0]?.imageUrl; %> <!-- Menyimpan imageUrl pertama pada variabel firstImageUrl -->
                         <div class="flex flex-row items-center w-full p-3 bg-white rounded-md shadow-sm">
-                            <img class="h-10 w-10 rounded mr-4 md:mr-6" src="http://localhost:9000/<%= firstImageUrl %>" alt="Pangkas">
+                            <img class="h-10 w-10 rounded mr-4 md:mr-6" src="https://server-pangkaspro-production.up.railway.app/<%= firstImageUrl %>" alt="Pangkas">
                             <div class="flex flex-row items-center w-full justify-between gap-x-2">
                                 <h5 class="text-xs md:text-lg"><%= transaction.barberId.name %></h5>
                                 <h5 class="text-xs md:text-lg"><%= transaction.userId.name %></h5>
