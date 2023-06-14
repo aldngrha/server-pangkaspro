@@ -17,6 +17,7 @@ module.exports = {
         const barber = new Barber({
           name: barberName,
           price: 0,
+          shippingCost: 0,
           description: "",
           accountName: "",
           bank: "",

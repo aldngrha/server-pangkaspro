@@ -35,8 +35,12 @@ function checkFileType(file, cb) {
   const mimeType = fileTypes.test(file.mimetype);
   if (mimeType && extName) {
     return cb(null, true);
+  } else if (!mimeType) {
+    cb("Error: Only images are allowed");
+  } else if (file.mimetype === "application/pdf") {
+    cb("Error: PDFs are not allowed");
   } else {
-    cb("Error: Images Only !!!");
+    cb("Error: Invalid file type");
   }
 }
 

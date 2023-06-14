@@ -30,6 +30,7 @@ module.exports = {
           {
             $match: {
               barberId: { $in: barberIds },
+              status: "completed",
             },
           },
           {
@@ -55,6 +56,11 @@ module.exports = {
 
         // Menghitung totalAmount dari seluruh transaksi
         totalAmount = await Transaction.aggregate([
+          {
+            $match: {
+              status: "completed",
+            },
+          },
           {
             $group: {
               _id: null,

@@ -14,15 +14,15 @@
                     <div class="flex flex-col md:flex-row md:flex-wrap justify-between gap-y-5 md:gap-x-2 py-2">
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="name" class="text-gray-600 font-light">Nama User</label>
-                            <input name="name" type="text" value="<%= user.name %>" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
+                            <input name="name" required type="text" value="<%= user.name %>" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="email" class="text-gray-600 font-light">Alamat Email</label>
-                            <input name="email" type="text" value="<%= user.email %>" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung@gmail.com">
+                            <input name="email" required type="text" value="<%= user.email %>" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung@gmail.com">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="password" class="text-gray-600 font-light">Password</label>
-                            <input name="password" type="password" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: ••••••••">
+                            <input name="password" required type="password" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: ••••••••">
                         </div>
                         <div class="flex flex-col md:w-full gap-y-2">
                             <button type="submit" style="background: #D25B04;" class="py-2 text-white font-semibold rounded-md hover:bg-secondary-hover hover:text-slate-100">Simpan</button>

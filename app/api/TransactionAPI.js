@@ -48,7 +48,7 @@ const CreateTransaction = async (req, res) => {
       return res.status(404).json({ message: "Kapster not found" });
     }
 
-    let total = barber.price * quantity;
+    let total = barber.price * quantity + barber.shippingCost;
 
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let invoice = "INV/PP/";
@@ -125,10 +125,9 @@ const AddonsTransaction = async (req, res) => {
     if (!barber) {
       return res.status(404).json({ message: "Barbershop not found" });
     }
-	
 
     addOns.forEach((addOn) => {
-	  const totalAddon = barber.price * addOn.quantity;
+      const totalAddon = barber.price * addOn.quantity;
       transaction.addOns.push({ ...addOn, totalAddon, isApproved: "pending" });
     });
 
@@ -156,7 +155,10 @@ const AddonsTransaction = async (req, res) => {
 const GetAllTransaction = async (req, res) => {
   try {
     const user = req.user._id;
-    const transaction = await Transaction.find({ userId: user, status: { $ne: "ongoing" }})
+    const transaction = await Transaction.find({
+      userId: user,
+      status: { $ne: "ongoing" },
+    })
       .select("_id invoiceNumber createdAt quantity name totalAmount status")
       .populate({
         path: "barberId",

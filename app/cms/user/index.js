@@ -118,9 +118,13 @@ module.exports = {
       // simpan user
       await user.save();
 
+      req.flash("alertMessage", "Success Menambah User");
+      req.flash("alertStatus", "green");
       res.redirect("/user");
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/user");
     }
   },
@@ -159,9 +163,13 @@ module.exports = {
       // simpan user
       await user.save();
 
+      req.flash("alertMessage", "Success Menambah User");
+      req.flash("alertStatus", "green");
       res.redirect("/user");
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/user");
     }
   },

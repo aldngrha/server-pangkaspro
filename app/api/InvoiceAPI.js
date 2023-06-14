@@ -11,9 +11,11 @@ const GetInvoice = async (req, res) => {
       _id: id,
       userId: user,
     })
-      .populate({ path: "barberId", select: "_id name price" })
+      .populate({ path: "barberId", select: "_id name price shippingCost" })
       .populate({ path: "kapsterId", select: "_id name" })
       .populate({ path: "userId", select: "_id name address phoneNumber" });
+
+    console.log(invoice);
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -342,6 +344,16 @@ function generateHtmlContent(invoice) {
                     <!-- Table Total -->
                     <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
                       <tbody>
+                        <tr>
+                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                            <strong>Biaya Perjalanan</strong>
+                          </td>
+                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                            <strong>Rp${invoice.barberId.shippingCost.toLocaleString(
+                              "id-ID"
+                            )}</strong>
+                          </td>
+                        </tr>
                         <tr>
                           <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
                             <strong>Total Biaya</strong>

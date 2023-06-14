@@ -8,7 +8,10 @@ const LandingPage = async (req, res) => {
       .limit(5)
       .populate({ path: "imageId", select: "_id imageUrl" });
 
-    const image = await Image.find().select("_id imageUrl").limit(3);
+    const image = await Image.aggregate([
+      { $sample: { size: 3 } },
+      { $project: { _id: 1, imageUrl: 1 } },
+    ]);
 
     res.status(200).json({
       status: 200,

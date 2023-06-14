@@ -74,8 +74,16 @@ module.exports = {
   },
   store: async (req, res) => {
     try {
-      const { name, price, bank, accountName, accountNumber, description } =
-        req.body;
+      const {
+        name,
+        price,
+        bank,
+        accountName,
+        accountNumber,
+        shippingCost,
+        description,
+      } = req.body;
+
       if (req.files.length > 0) {
         const barber = new Barber({
           name,
@@ -83,6 +91,7 @@ module.exports = {
           bank,
           accountName,
           accountNumber,
+          shippingCost,
           description,
         });
         await barber.save();
@@ -100,9 +109,12 @@ module.exports = {
           await barber.save();
         }
       }
+      req.flash("alertMessage", "Success Menambah Barber");
+      req.flash("alertStatus", "green");
       res.redirect("/barber");
     } catch (error) {
-      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/barber");
     }
   },
@@ -134,8 +146,15 @@ module.exports = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, price, bank, accountName, accountNumber, description } =
-        req.body;
+      const {
+        name,
+        price,
+        bank,
+        accountName,
+        accountNumber,
+        shippingCost,
+        description,
+      } = req.body;
       const barber = await Barber.findOne({ _id: id }).populate({
         path: "imageId",
         select: "id imageUrl",
@@ -164,6 +183,7 @@ module.exports = {
         barber.bank = bank;
         barber.accountName = accountName;
         barber.accountNumber = accountNumber;
+        barber.shippingCost = shippingCost;
         barber.description = description;
         await barber.save();
         req.flash("alertMessage", "Success update barber");
@@ -175,6 +195,7 @@ module.exports = {
         barber.bank = bank;
         barber.accountName = accountName;
         barber.accountNumber = accountNumber;
+        barber.shippingCost = shippingCost;
         barber.description = description;
         await barber.save();
         req.flash("alertMessage", "Success update barber");
@@ -182,7 +203,8 @@ module.exports = {
         res.redirect("/barber");
       }
     } catch (error) {
-      console.error(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/barber");
     }
   },

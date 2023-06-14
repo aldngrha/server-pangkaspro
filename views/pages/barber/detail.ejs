@@ -48,7 +48,12 @@
                             <td class="px-6 py-4">
                                 <%= barber.accountNumber %>
                             </td>
-
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                Ongkos Kirim
+                            </th>
+                            <td class="px-6 py-4">
+                                Rp<%= barber.shippingCost.toLocaleString("id-ID") %>
+                            </td>
                         </tr>
                         <tr class="bg-white">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">

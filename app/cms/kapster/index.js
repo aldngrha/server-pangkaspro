@@ -83,9 +83,14 @@ module.exports = {
 
       barber.kapsterId.push({ _id: kapster._id });
       await barber.save();
+
+      req.flash("alertMessage", "Success Menambah Kapster");
+      req.flash("alertStatus", "green");
       res.redirect("/kapster");
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/kapster");
     }
   },
@@ -154,6 +159,8 @@ module.exports = {
       }
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/kapster");
     }
   },

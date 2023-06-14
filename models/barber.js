@@ -10,6 +10,9 @@ const BarberSchema = new mongoose.Schema(
     price: {
       type: Number,
     },
+    shippingCost: {
+      type: Number,
+    },
     description: {
       type: String,
     },

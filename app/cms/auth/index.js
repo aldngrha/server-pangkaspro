@@ -59,9 +59,11 @@ module.exports = {
         name: user.name,
         role: user.role,
       };
-
-      // Redirect ke halaman dashboard
-      res.redirect("/dashboard");
+      if (req.session.user.role === "kapster") {
+        res.redirect("/cash-on-delivery");
+      } else {
+        res.redirect("/dashboard");
+      }
     } catch (err) {
       req.flash("alertMessage", `${err.message}`);
       req.flash("alertStatus", "red");

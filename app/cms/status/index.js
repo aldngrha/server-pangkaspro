@@ -123,9 +123,13 @@ module.exports = {
       kapster.statusId = statusWork._id;
       await kapster.save();
 
+      req.flash("alertMessage", "Success Menambah Status");
+      req.flash("alertStatus", "green");
       res.redirect("/status");
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/status");
     }
   },
@@ -187,9 +191,13 @@ module.exports = {
       statusWork.time = time;
       await statusWork.save();
 
+      req.flash("alertMessage", "Success Mengubah Status");
+      req.flash("alertStatus", "green");
       res.redirect("/status");
     } catch (error) {
       console.log(error);
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", "red");
       res.redirect("/status");
     }
   },

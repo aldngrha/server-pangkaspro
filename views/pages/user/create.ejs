@@ -14,15 +14,15 @@
                     <div class="flex flex-col md:flex-row md:flex-wrap justify-between gap-y-5 md:gap-x-2 py-2">
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="name" class="text-gray-600 font-light">Nama User</label>
-                            <input name="name" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
+                            <input name="name" required type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="email" class="text-gray-600 font-light">Alamat Email</label>
-                            <input name="email" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung@gmail.com">
+                            <input name="email" required type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Ipung@gmail.com">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <label for="password" class="text-gray-600 font-light">Password</label>
-                            <input name="password" type="password" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: ••••••••">
+                            <input name="password" required type="password" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: ••••••••">
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2">
                             <p class="text-gray-600 font-light mb-2">Role User</p>
@@ -72,12 +72,12 @@
                         <div class="flex flex-col md:w-[30rem] gap-y-2 invisible" id="barber-name">
                             <div class="flex flex-col gap-y-2">
                                 <label for="barberName" class="text-gray-600 font-light">Nama Barbershop</label>
-                                <input name="barberName" type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Pangkas Ipung">
+                                <input name="barberName" required type="text" class="placeholder:italic placeholder:text-slate-400 bg-white w-full border border-gray-500 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-secondary focus:ring-secondary focus:ring-1 sm:text-sm" placeholder="ex: Pangkas Ipung">
                             </div>
                         </div>
                         <div class="flex flex-col md:w-[30rem] gap-y-2 invisible" id="list-barber">
                             <label for="barberId" class="text-gray-600 font-light">Barbershop</label>
-                            <select name="barberId" id="barberId" class="bg-white border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <select name="barberId" required id="barberId" class="bg-white border border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option selected>Pilih Barber</option>
                                 <% for( let i = 0; i < barbers.length; i++ ) { %>
                                     <option value="<%= barbers[i]._id %>"><%= barbers[i].name %> </option>
