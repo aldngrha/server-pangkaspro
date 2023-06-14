@@ -18,8 +18,7 @@ const GetInvoice = async (req, res) => {
     console.log(invoice);
 
     const browser = await puppeteer.launch({
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      ignoreDefaultArgs: ["--disable-extensions"],
+      args: ["--no-sandbox"]
     });
     const page = await browser.newPage();
 
