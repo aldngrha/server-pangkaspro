@@ -22,6 +22,8 @@ const GetInvoice = async (req, res) => {
     });
     const page = await browser.newPage();
 
+	console.log(generateHtmlContent(invoice));
+	
     await page.setContent(generateHtmlContent(invoice));
     const pdf = await page.pdf();
 
