@@ -17,12 +17,11 @@ const URL = `/api/v1`;
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-	cors: {
-		origin: "https://pangkaspro.vercel.app/",
-		methods: ["GET", "POST"]
-	  }
+  cors: {
+    origin: "https://pangkaspro.vercel.app",
+    methods: ["GET", "POST"],
+  },
 });
-
 
 app.use(cors());
 app.set("io", io);
