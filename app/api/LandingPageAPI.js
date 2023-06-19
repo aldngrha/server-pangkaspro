@@ -5,7 +5,7 @@ const LandingPage = async (req, res) => {
   try {
     const barbershop = await Barber.find()
       .select("_id name price rating")
-      .limit(5)
+      .limit(10)
       .populate({ path: "imageId", select: "_id imageUrl" });
 
     const image = await Image.aggregate([
