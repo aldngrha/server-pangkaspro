@@ -5,6 +5,7 @@ const LandingPage = async (req, res) => {
   try {
     const barbershop = await Barber.find()
       .select("_id name price rating")
+      .sort({ createdAt: -1 })
       .limit(10)
       .populate({ path: "imageId", select: "_id imageUrl" });
 

@@ -20,6 +20,8 @@ const router = express.Router();
 router.get("/", Auth.signin);
 router.post("/", Auth.actionSignin);
 router.get("/signout", Auth.actionSignout);
+router.get("/register", Auth.signup);
+router.post("/register", Auth.actionSignup);
 
 router.get("/dashboard", allRole, Dashboard.dashboard);
 

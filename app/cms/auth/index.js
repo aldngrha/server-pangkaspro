@@ -1,4 +1,5 @@
 const User = require("../../../models/user");
+const Barber = require("../../../models/barber");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
@@ -11,13 +12,76 @@ module.exports = {
       if (req.session.user === null || req.session.user === undefined) {
         res.render("pages/signin", {
           alert,
-          title: "Pangkaspro | Signin user",
+          title: "Pangkaspro | Signin Barbershop & Kapster",
         });
       } else {
         res.redirect("/dashboard");
       }
     } catch (error) {
       res.redirect("/");
+    }
+  },
+  signup: async (req, res) => {
+    try {
+      const alertMessage = req.flash("alertMessage");
+      const alertStatus = req.flash("alertStatus");
+
+      const alert = { message: alertMessage, status: alertStatus };
+      if (req.session.user === null || req.session.user === undefined) {
+        res.render("pages/signup", {
+          alert,
+          title: "Pangkaspro | Signup Barbershop",
+        });
+      } else {
+        res.redirect("/dashboard");
+      }
+    } catch (error) {
+      res.redirect("/");
+    }
+  },
+  actionSignup: async (req, res) => {
+    try {
+      const { name, email, password, barberName } = req.body;
+
+      let userRole = "barber";
+
+      const barber = new Barber({
+        name: barberName,
+        price: 0,
+        shippingCost: 0,
+        description: "",
+        accountName: "",
+        bank: "",
+        accountNumber: "",
+        imageId: [],
+        rating: 0,
+      });
+      await barber.save();
+      // set role untuk user yang terkait
+
+      // buat user baru dengan role barber
+      let user = new User({
+        name: name,
+        email: email,
+        password: password,
+        phoneNumber: "",
+        address: "",
+        role: userRole,
+        barber: [barber._id],
+      });
+      // simpan user
+      await user.save();
+
+      req.flash(
+        "alertMessage",
+        "Sukses mendaftar sebagai pemilik barbershop, silakan login"
+      );
+      req.flash("alertStatus", "green");
+      res.redirect("/");
+    } catch (error) {
+      req.flash("alertMessage", `${err.message}`);
+      req.flash("alertStatus", "red");
+      res.redirect("/register");
     }
   },
   actionSignin: async (req, res) => {

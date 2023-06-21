@@ -30,17 +30,18 @@ const uploadMultiple = multer({
 }).array("image");
 
 function checkFileType(file, cb) {
-  const fileTypes = /"jpeg"|"jpg"|"png"|"gif"/;
+  const fileTypes = /jpeg|jpg|png|gif/;
   const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
   const mimeType = fileTypes.test(file.mimetype);
+
   if (mimeType && extName) {
     return cb(null, true);
   } else if (!mimeType) {
-    cb("Error: Only images are allowed");
+    return cb(new Error("Hanya image yang diizinkan"));
   } else if (file.mimetype === "application/pdf") {
-    cb("Error: PDFs are not allowed");
+    return cb(new Error("Tidak bisa memasukkan file pdf"));
   } else {
-    cb("Error: Invalid file type");
+    return cb(new Error("Tipe file yang dimasukkan tidak valid"));
   }
 }
 

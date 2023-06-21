@@ -7,49 +7,20 @@ const Barber = require("../../../models/barber");
 module.exports = {
   register: async (req, res) => {
     try {
-      const { name, email, password, option, barberName } = req.body;
+      const { name, email, password } = req.body;
 
       let userRole = "user";
       let user;
 
-      // Jika memilih 'Yes', buat data Barber terlebih dahulu
-      if (option === "yes") {
-        const barber = new Barber({
-          name: barberName,
-          price: 0,
-          shippingCost: 0,
-          description: "",
-          accountName: "",
-          bank: "",
-          accountNumber: "",
-          imageId: [],
-          rating: 0,
-        });
-        await barber.save();
-        // set role untuk user yang terkait
-        userRole = "barber";
-
-        // buat user baru dengan role barber
-        user = new User({
-          name: name,
-          email: email,
-          password: password,
-          phoneNumber: "",
-          address: "",
-          role: userRole,
-          barber: [barber._id],
-        });
-      } else {
-        // buat user baru dengan role user
-        user = new User({
-          name: name,
-          email: email,
-          password: password,
-          phoneNumber: "",
-          address: "",
-          role: userRole,
-        });
-      }
+      // buat user baru dengan role user
+      user = new User({
+        name: name,
+        email: email,
+        password: password,
+        phoneNumber: "",
+        address: "",
+        role: userRole,
+      });
 
       // simpan user
       await user.save();
